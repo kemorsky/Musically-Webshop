@@ -1,6 +1,11 @@
-export type ProductCategory = 'Guitar' | 'Bass' | 'Drums' | 'Keyboards' | 'Amplifiers' | 'Accessories' | 'Other';
+export type ProductCategory =  
+| 'Acoustic Guitar'
+| 'Electric Guitar'
+| 'Drums'
+| 'Keyboard'
+| 'Accessories';
 
-export type ProductCondition = 'New' | 'Like New' | 'Very Good' | 'Good' | 'Fair' | 'Poor';
+export type ProductCondition = 'New' | 'Like New' |  'Good' | 'Fair' | 'Stage Tested';
 
 export interface Product {
   id: string;
@@ -10,11 +15,12 @@ export interface Product {
   condition: ProductCondition;
   price: number;
   description: string;
+  sellerDescription: string;
   yearMade?: number;
   images: string[];
-  stock: number;
+  numberOfStrings: number;
+  width: number;
   isOnSale: boolean;
   salePrice?: number;
   tags: string[];
-  location: string;
 }

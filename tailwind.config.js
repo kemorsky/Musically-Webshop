@@ -6,6 +6,9 @@ module.exports = {
       fontFamily: {
 
       },
+      screens: {
+        ipad: '835px', // Custom breakpoint for iPad screens
+      },
     },
   },
   plugins: [],

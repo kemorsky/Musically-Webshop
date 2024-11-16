@@ -1,23 +1,37 @@
 import { createBrowserRouter } from 'react-router-dom';
 import App from '../App';
-import ProductPageWrapper from './ProductPageWrapper';
+import About from '../pages/About';
+import ProductPage from '../pages/ProductPage';
 import PurchasePage from '../pages/PurchasePage';
 import ConfirmationPage from '../pages/ConfirmationPage';
 import ProductList from '../pages/ProductsPage';
+import { ProductProvider } from '../context/ProductContext';
 
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <App />,
+    element: (
+      <ProductProvider> {/* Wrap in ProductProvider to ensure context is available */}
+        <App />
+      </ProductProvider>
+    ),
   },
   {
     path: '/product/:productId',
-    element: <ProductPageWrapper />,
+    element: (
+      <ProductProvider> {/* Wrap in ProductProvider to ensure context is available */}
+        <ProductPage />
+      </ProductProvider>
+    ),
   },
   {
-    path: '/purchase/:d',
-    element: <PurchasePage />,
+    path: '/purchase/:productId',
+    element: (
+      <ProductProvider> {/* Wrap in ProductProvider to ensure context is available */}
+        <PurchasePage />
+      </ProductProvider>
+    ),
   },
   {
     path: '/confirmation/:id',
@@ -25,7 +39,15 @@ const router = createBrowserRouter([
   },
   {
     path: '/products',
-    element: <ProductList />,
+    element: (
+      <ProductProvider> {/* Wrap in ProductProvider for consistent context */}
+        <ProductList />
+      </ProductProvider>
+    ),
+  },
+  {
+    path: '/about',
+    element: <About />,
   },
  
 ]);

@@ -17,6 +17,7 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({ children })
   useEffect(() => {
     const mockProducts = generateMockProducts(100);
     setProducts(mockProducts);
+    console.log("Products loaded in context:", mockProducts); // Check if products are being set correctly
   }, []);
 
   return (
