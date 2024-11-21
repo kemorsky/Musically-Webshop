@@ -1,16 +1,22 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Product } from "../interfaces/interfaces";
+import { useProducts } from "../context/ProductContext";
+import { useCart } from "../context/CartContext";
 import Fuse from "fuse.js";
-import Cart from "./Cart";
 
 export default function Header() {
   const [query, setQuery] = useState<string>("");
   const [matches, setMatches] = useState<Product[]>([]);
-  const [isExpanded, setIsExpanded] = useState<boolean>(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false); // For expanding search on mobile
+  const [cartDropdownOpen, setCartDropdownOpen] = useState(false);
+  const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const { products } = useProducts();
 
   const navigate = useNavigate();
+
+  const { cartItems, removeFromCart } = useCart();  // Access cart state
 
   const fuse = new Fuse(matches, {
     keys: ["name", "category", "brand"],
@@ -32,172 +38,264 @@ export default function Header() {
   const goToAbout = () => navigate("/about");
   const goToContact = () => navigate("/contact");
 
-  const handleSearchToggle = () => {
-    setIsSearchOpen(!isSearchOpen);
+  const goToCheckout = (product: Product) => {
+    event?.preventDefault();
+    navigate(`/purchase/${product.id}`);
   };
 
-  const handleMenuToggle = () => {
-    setIsExpanded(!isExpanded);
-  };
+  const formatPrice = (price: number) => 
+    new Intl.NumberFormat('sv-SE', {
+      style: 'currency',
+      currency: 'SEK',
+    }).format(price);
 
   return (
-    <header className="border-b bg-white font-sans min-h-[60px] px-10 py-3 relative tracking-wide z-50">
-      <div className="flex flex-wrap items-center max-lg:gap-y-6 max-sm:gap-x-4">
-        <a href="javascript:void(0)">
-          <img
-            src="https://readymadeui.com/readymadeui.svg"
-            alt="logo"
-            className="w-36"
-          />
-        </a>
-
-        <div
-          id="collapseMenu"
-          className={`lg:flex lg:items-center ${
-            isExpanded
-              ? "max-lg:block max-lg:space-y-3 max-lg:fixed max-lg:bg-white max-lg:w-2/3 max-lg:min-w-[300px] max-lg:top-0 max-lg:left-0 max-lg:px-10 max-lg:py-4 max-lg:h-full max-lg:shadow-md max-lg:overflow-auto z-50"
-              : "max-lg:hidden"
-          }`}
-        >
-          <button
-            id="toggleClose"
-            className="lg:hidden fixed top-2 right-4 z-[100] rounded-full bg-white p-3"
-            onClick={handleMenuToggle}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-4 fill-black"
-              viewBox="0 0 320.591 320.591"
-            >
-              <path
-                d="M30.391 318.583a30.37 30.37 0 0 1-21.56-7.288c-11.774-11.844-11.774-30.973 0-42.817L266.643 10.665c12.246-11.459 31.462-10.822 42.921 1.424 10.362 11.074 10.966 28.095 1.414 39.875L51.647 311.295a30.366 30.366 0 0 1-21.256 7.288z"
-              ></path>
-              <path
-                d="M287.9 318.583a30.37 30.37 0 0 1-21.257-8.806L8.83 51.963C-2.078 39.225-.595 20.055 12.143 9.146c11.369-9.736 28.136-9.736 39.504 0l259.331 257.813c12.243 11.462 12.876 30.679 1.414 42.922-.456.487-.927.958-1.414 1.414a30.368 30.368 0 0 1-23.078 7.288z"
-              ></path>
-            </svg>
-          </button>
-
-          <ul className="lg:flex lg:gap-x-10 lg:absolute lg:left-1/2 lg:-translate-x-1/2 max-lg:space-y-3">
-            <li className="mb-6 hidden max-lg:block">
-              <a href="javascript:void(0)">
-                <img
-                  src="https://readymadeui.com/readymadeui.svg"
-                  alt="logo"
-                  className="w-36"
+      <nav className="bg-gray-800 antialiased">
+        <div className="max-w-screen-xl px-4 mx-auto 2xl:px-0 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-8">
+              <div className="shrink-0">
+                <a href="#" title="">
+                  <img
+                    className="block w-auto h-8 dark:hidden"
+                    src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/logo-full.svg"
+                    alt="Logo"
+                  />
+                  <img
+                    className="hidden w-auto h-8 dark:block"
+                    src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/logo-full-dark.svg"
+                    alt="Dark Logo"
+                  />
+                </a>
+              </div>
+              <ul className="hidden lg:flex items-center justify-start gap-6 md:gap-8 py-3 sm:justify-center">
+                  <li className="shrink-0">
+                    <a
+                      className="flex text-sm font-medium text-gray-900 hover:text-primary-700 dark:text-white dark:hover:text-primary-500 cursor-pointer"
+                      onClick={goToHome}
+                    >
+                      Home
+                    </a>
+                  </li>
+                  <li className="shrink-0">
+                    <p                      
+                      className="flex text-sm font-medium text-gray-900 hover:text-primary-700 dark:text-white dark:hover:text-primary-500 cursor-pointer"
+                      onClick={goToProducts}
+                    >
+                      Products
+                    </p>
+                  </li>
+                  <li className="shrink-0">
+                    <p
+                      className="flex text-sm font-medium text-gray-900 hover:text-primary-700 dark:text-white dark:hover:text-primary-500 cursor-pointer"
+                      onClick={goToAbout}
+                    >
+                      About
+                    </p>
+                  </li>
+                  <li className="shrink-0">
+                    <p
+                      className="flex text-sm font-medium text-gray-900 hover:text-primary-700 dark:text-white dark:hover:text-primary-500 cursor-pointer"
+                      onClick={goToContact}
+                    >
+                      Contact
+                    </p>
+                  </li>
+                  
+              </ul>
+            </div>
+            <div className="flex items-center lg:space-x-2">
+              {/* Search Bar (Desktop View) */}
+              <div className="hidden lg:flex items-center w-full lg:w-auto">
+                <input
+                  type="text"
+                  value={query}
+                  onChange={(e) => handleSearch(e.target.value)}
+                  placeholder="Search..."
+                  className="border border-gray-300 rounded-full px-4 py-2 text-white outline-none focus:ring-2 focus:ring-green-500 transition-all w-full lg:w-80"
                 />
-              </a>
-            </li>
-            <li className="max-lg:border-b max-lg:py-3">
-              <a
-                href="javascript:void(0)"
-                className="hover:text-[#007bff] text-[15px] text-[#007bff] block font-bold"
-              >
-                Home
-              </a>
-            </li>
-            <li className="group max-lg:border-b max-lg:py-3 relative">
-              <a
-                href="javascript:void(0)"
-                className="hover:text-[#007bff] text-gray-600 font-bold text-[15px] lg:hover:fill-[#007bff] block"
-              >
-                Pages
-              </a>
-            </li>
-            <li className="group max-lg:border-b max-lg:py-3 relative">
-              <a
-                href="javascript:void(0)"
-                className="hover:text-[#007bff] text-gray-600 font-bold text-[15px] lg:hover:fill-[#007bff] block"
-              >
-                Blog
-              </a>
-            </li>
-            <li className="max-lg:border-b max-lg:py-3">
-              <a
-                href="javascript:void(0)"
-                className="hover:text-[#007bff] text-gray-600 font-bold text-[15px] block"
-              >
-                Team
-              </a>
-            </li>
-            <li className="max-lg:border-b max-lg:py-3">
-              <a
-                href="javascript:void(0)"
-                className="hover:text-[#007bff] text-gray-600 font-bold text-[15px] block"
-              >
-                About
-              </a>
-            </li>
-            <li className="max-lg:border-b max-lg:py-3">
-              <a
-                href="javascript:void(0)"
-                className="hover:text-[#007bff] text-gray-600 font-bold text-[15px] block"
-              >
-                Contact
-              </a>
-            </li>
-            <li className="max-lg:border-b max-lg:py-3">
-              <a
-                href="javascript:void(0)"
-                className="hover:text-[#007bff] text-gray-600 font-bold text-[15px] block"
-              >
-                Source
-              </a>
-            </li>
-          </ul>
-        </div>
+              </div>
 
-        <div className="flex items-center ml-auto space-x-8">
-          {/* Search Bar */}
-          <div className="relative ">
+              <button
+                onClick={() => setCartDropdownOpen(!cartDropdownOpen)}
+                className="inline-flex items-center rounded-lg justify-center p-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm font-medium leading-none text-gray-900 dark:text-white"
+              >
+                <span className="sr-only">Cart</span>
+                <svg
+                  className="w-5 h-5 lg:me-1"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312"
+                  />
+                </svg>
+                <span className="hidden sm:flex">My Cart</span>
+              </button>
+              {cartDropdownOpen && (
+                <div className="absolute right-0 lg:right-[20rem] top-[3.3rem] lg:top-[3.8rem] z-10 w-80 lg:w-[30rem] space-y-4 overflow-hidden rounded-lg bg-white p-4 antialiased shadow-lg dark:bg-gray-800">
+                  {/* Purchased items go here */}
+                  <div className="flex flex-col gap-2">
+                    {cartItems.length === 0 ? (
+                      <p>Your cart is empty</p>
+                    ) : (
+                    cartItems.map((product) => (
+                    <div id={product.id} className='flex justify-around items-center p-2 mb-1 m-auto rounded-lg shadow-md text-black text-opacity-75 bg-white lg:w-[26rem] w-[18rem] min-h-[5rem] text-left'>
+                        <img className="lg:w-[6rem] w-[5rem] lg:h-[6rem] h-[5rem] bg-orange-400 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] rounded-lg" src={product.images[0]} alt="" />
+                          <article className="lg:w-[16rem] w-[8rem]">
+                            <h2 className="lg:text-lg text-sm font-semibold ">{product.name}</h2>
+                            <p className="text-xs sm:text-sm text-black"><strong>Brand:</strong> {product.brand}</p>
+                            <p className="text-xs sm:text-sm text-black"><strong>Condition:</strong> {product.condition}</p>
+                            <section className="flex items-center justify-between">
+                              <p className="lg:text-lg text-[1rem] font-bold text-gray-800">
+                                  {formatPrice(product.price)}
+                                </p>
+                                <button className="h-[2.5rem] w-[2.5rem] bg-white border border-gray-700 border-opacity-60 rounded-md shadow-md flex justify-center items-center"
+                                        onClick={() => removeFromCart(product.id)}>
+                                  <svg xmlns="http://www.w3.org/2000/svg" 
+                                      width="24" 
+                                      height="24" 
+                                      viewBox="0 0 24 24" 
+                                      fill="none" 
+                                      stroke="#FF0000" 
+                                      stroke-width="2" 
+                                      stroke-linecap="round" 
+                                      stroke-linejoin="round" 
+                                        className="lucide lucide-trash-2">
+                                          <path d="M3 6h18"/>
+                                          <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
+                                          <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
+                                          <line x1="10" x2="10" y1="11" y2="17"/>
+                                          <line x1="14" x2="14" y1="11" y2="17"/>
+                                </svg>
+                              </button>
+                          </section>
+                      </article>
+                  </div>
+                  ))
+                )}
+                </div>
+                  <button
+                    className="inline-flex w-full lg:w-[14rem] justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 dark:bg-primary-600 dark:hover:bg-primary-700"
+                    onClick={() => goToCheckout(products[0])}
+                  >
+                    Proceed to Checkout
+                  </button>
+                </div>
+              )}
+
+              <button
+                onClick={() => setUserDropdownOpen(!userDropdownOpen)}
+                className="inline-flex items-center rounded-lg justify-center p-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm font-medium leading-none text-gray-900 dark:text-white"
+              >
+                Account
+              </button>
+              {userDropdownOpen && (
+                <div className="absolute right-0 lg:right-[14rem] top-[3.2rem]  lg:top-[3.8rem] z-10 w-56 divide-y divide-gray-100 rounded-lg shadow dark:divide-gray-600 dark:bg-gray-700">
+                  <ul className="p-2 text-sm text-white">
+                    {['My Account', 'My Orders', 'Settings'].map(
+                      (item) => (
+                        <li key={item}>
+                          <p
+                            className="block px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-600"
+                          >
+                            {item}
+                          </p>
+                        </li>
+                      )
+                    )}
+                  </ul>
+                  <div className="p-2">
+                    <a
+                      href="#"
+                      className="block px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-600"
+                    >
+                      Sign Out
+                    </a>
+                  </div>
+                </div>
+              )}
+
+              <button
+                onClick={() => setMenuOpen(!menuOpen)}
+                className="inline-flex lg:hidden items-center justify-center p-2 hover:bg-gray-100 rounded-md dark:hover:bg-gray-700"
+              >
+                <svg
+                  className="w-5 h-5"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeWidth="2"
+                    d="M5 7h14M5 12h14M5 17h14"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+          {menuOpen && (
+            <div className="lg:hidden">
+              <ul className="space-y-3 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                  <li>
+                    <a
+                      href="#"
+                      className="block hover:text-primary-700 dark:hover:text-primary-500"
+                      onClick={goToHome}
+                    >
+                      Home
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      className="block hover:text-primary-700 dark:hover:text-primary-500"
+                      onClick={goToProducts}
+                    >
+                      Products
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      className="block hover:text-primary-700 dark:hover:text-primary-500"
+                      onClick={goToAbout}
+                    >
+                      About
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      className="block hover:text-primary-700 dark:hover:text-primary-500"
+                      onClick={goToContact}
+                    >
+                      Contact
+                    </a>
+                  </li>
+              </ul>
+            </div>
+          )}
+
+          {/* Search Bar positioned outside of the dropdown menu and centered on mobile */}
+          <div className="flex justify-center mt-4 lg:hidden">
             <input
               type="text"
+              value={query}
+              onChange={(e) => handleSearch(e.target.value)}
               placeholder="Search..."
-              className="border px-4 py-2 rounded-full w-36"
+              className="w-full max-w-md border border-gray-300 rounded-full px-4 py-2 text-white outline-none focus:ring-2 focus:ring-green-500 transition-all"
             />
-            <button className="absolute right-2 top-1/2 transform -translate-y-1/2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20px"
-                height="20px"
-                className="text-gray-600"
-                viewBox="0 0 20 20"
-                fill="none"
-              >
-                <path
-                  d="M19 18l-4.35-4.35a7.5 7.5 0 1 0-1.42 1.42L18 19l-1 1-5.35-5.35a8.1 8.1 0 0 0 1.42-1.42L18 18l1-1z"
-                  fill="currentColor"
-                />
-              </svg>
-            </button>
           </div>
         </div>
-
-        <div className="flex items-center ml-auto space-x-8">
-          <span className="relative">
-            < Cart/>
-          </span>
-        </div>
-
-        <button
-          className="lg:hidden ml-auto p-2"
-          onClick={handleMenuToggle}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-5 h-5 text-gray-600"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            aria-hidden="true"
-          >
-            <path
-              fillRule="evenodd"
-              d="M2 4a1 1 0 011-1h16a1 1 0 110 2H3a1 1 0 01-1-1zM2 10a1 1 0 011-1h16a1 1 0 110 2H3a1 1 0 01-1-1zM2 16a1 1 0 011-1h16a1 1 0 110 2H3a1 1 0 01-1-1z"
-              clipRule="evenodd"
-            ></path>
-          </svg>
-        </button>
-      </div>
-    </header>
+      </nav>
   );
 }

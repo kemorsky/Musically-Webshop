@@ -9,19 +9,20 @@ import acousticGuitarImage3 from '../assets/acoustic-guitar2.jpg';
 import drumsImage1 from '../assets/drums-1.jpg';
 import drumsImage2 from '../assets/drums-2.jpg';
 import drumsImage3 from '../assets/drums-3.jpg';
-import keyboardImage1 from '../assets/keyboard-1.jpg';
-import keyboardImage2 from '../assets/keyboard-2.jpg';
-import keyboardImage3 from '../assets/keyboard-3.jpeg';
+import fluteImage1 from '../assets/flute1.jpg';
+import fluteImage2 from '../assets/flute2.jpg';
+import fluteImage3 from '../assets/flute3.jpg';
+import saxophoneImage1 from '../assets/saxophone1.png';
+import saxophoneImage2 from '../assets/saxophone2.jpg';
 
-const categories: ProductCategory[] = ['Acoustic Guitar', 'Electric Guitar', 'Drums', 'Keyboard', 'Accessories'];
+const categories: ProductCategory[] = ['Acoustic Guitar', 'Electric Guitar', 'Drums', 'Flutes', 'Saxophones'];
 const conditions: ProductCondition[] = ['New', 'Like New', 'Good', 'Fair', 'Stage Tested'];
 const brands = {
   'Acoustic Guitar': ['Martin', 'Taylor', 'Yamaha', 'Gibson', 'Fender'],
   'Electric Guitar': ['Fender', 'Gibson', 'Ibanez', 'Epiphone'],
-  'Bass': ['Fender', 'Ibanez', 'Yamaha', 'Rickenbacker', 'Warwick'],
   'Drums': ['Pearl', 'Yamaha', 'Ludwig'],
-  'Keyboard': ['Yamaha', 'Roland', 'Korg', 'Casio', 'Nord'],
-  'Accessories': ['Dunlop', 'Ernie Ball', 'D’Addario', 'Boss', 'TC Electronic']
+  'Flutes': ['Yamaha', 'Gemeinhardt', 'Muramatsu', 'Trevor James', 'Powell Flutes'],
+  'Saxophones': ['Selmer Paris', 'Yanagisawa', 'Yamaha', 'Jupiter', 'P. Mauriat']
 };
 
 // Predefined instrument images based on categories
@@ -41,14 +42,14 @@ const instrumentImages: { [key in ProductCategory]: string[] } = {
     drumsImage2,
     drumsImage3
   ],
-  'Keyboard': [
-    keyboardImage1,
-    keyboardImage2,
-    keyboardImage3
+  'Flutes': [
+    fluteImage1,
+    fluteImage2,
+    fluteImage3
   ],
-  'Accessories': [
-    'https://example.com/accessory-1.jpg',
-    'https://example.com/accessory-2.jpg'
+  'Saxophones': [
+    saxophoneImage1,
+    saxophoneImage2
   ]
 };
 
@@ -58,12 +59,14 @@ export const generateMockProducts = (count: number = 30): Product[] => {
     const brand = faker.helpers.arrayElement(brands[category]);
     const condition = faker.helpers.arrayElement(conditions);
     const yearMade = faker.number.int({ min: 1970, max: 2023 });
-    const isOnSale = faker.datatype.boolean();
     const price = faker.number.int({ min: 200, max: 4000 });
-    const salePrice = isOnSale ? price * 0.8 : undefined;
-    const numberOfStrings = faker.number.int({ min: 3, max: 6 });
     const imageSet = instrumentImages[category];
     const width = faker.number.int({ min: 570, max: 1800});
+    const sellerReviews = Array.from({ length: faker.number.int({ min: 1, max: 5 }) }, () => ({
+      rating: faker.number.int({ min: 1, max: 5 }), // Star rating (1-5)
+      comment: faker.lorem.sentence(faker.number.int({ min: 3, max: 12 })), // Short review
+      reviewer: faker.name.fullName() // Random reviewer name
+    }));
 
     return {
       id: faker.string.uuid(),
@@ -75,14 +78,12 @@ export const generateMockProducts = (count: number = 30): Product[] => {
       description: faker.commerce.productDescription(),
       sellerDescription: 'Lorem ipsum kombucha ninja hello kitty pug bowl mug cat kayboard paper tissue screen bigos. Lorem ipsum valhalla pyszne jedzenie router Andrzeju nie denerwuj sie.',
       yearMade,
-      images: Array.from({ length: faker.number.int({ min: 1, max: 3 }) }, () =>
+      images: Array.from({ length: faker.number.int({ min: 4, max: 5 }) }, () =>
         faker.helpers.arrayElement(imageSet)
       ),
-      numberOfStrings,
-      isOnSale,
-      salePrice,
       width,
-      tags: faker.lorem.words(faker.number.int({ min: 2, max: 5 })).split(' ')
+      tags: faker.lorem.words(faker.number.int({ min: 2, max: 5 })).split(' '),
+      sellerReviews
     };
   });
 };

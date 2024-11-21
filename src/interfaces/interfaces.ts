@@ -2,10 +2,16 @@ export type ProductCategory =
 | 'Acoustic Guitar'
 | 'Electric Guitar'
 | 'Drums'
-| 'Keyboard'
-| 'Accessories';
+| 'Flutes'
+| 'Saxophones';
 
 export type ProductCondition = 'New' | 'Like New' |  'Good' | 'Fair' | 'Stage Tested';
+
+export interface SellerReview {
+  rating: number;
+  comment: string;
+  reviewer: string;
+}
 
 export interface Product {
   id: string;
@@ -18,9 +24,7 @@ export interface Product {
   sellerDescription: string;
   yearMade?: number;
   images: string[];
-  numberOfStrings: number;
   width: number;
-  isOnSale: boolean;
-  salePrice?: number;
   tags: string[];
+  sellerReviews: SellerReview[];
 }

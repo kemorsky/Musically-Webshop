@@ -1,55 +1,76 @@
+// src/router/index.ts
+
 import { createBrowserRouter } from 'react-router-dom';
-import App from '../App';
+import { ProductProvider } from '../context/ProductContext';  // Import ProductProvider
+import { CartProvider } from '../context/CartContext';  // Import CartProvider
+import App from '../App';  // Your homepage (App.tsx)
 import About from '../pages/About';
 import ProductPage from '../pages/ProductPage';
 import PurchasePage from '../pages/PurchasePage';
 import ConfirmationPage from '../pages/ConfirmationPage';
 import ProductList from '../pages/ProductsPage';
-import { ProductProvider } from '../context/ProductContext';
-
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: (
-      <ProductProvider> {/* Wrap in ProductProvider to ensure context is available */}
-        <App />
+      <ProductProvider>  {/* Provide context for the homepage */}
+        <CartProvider>   {/* Provide context for the cart */}
+          <App />
+        </CartProvider>
       </ProductProvider>
     ),
   },
   {
     path: '/product/:productId',
     element: (
-      <ProductProvider> {/* Wrap in ProductProvider to ensure context is available */}
-        <ProductPage />
+      <ProductProvider>  {/* Provide context for ProductPage */}
+        <CartProvider>   {/* Provide context for the cart */}
+          <ProductPage />
+        </CartProvider>
       </ProductProvider>
     ),
   },
   {
     path: '/purchase/:productId',
     element: (
-      <ProductProvider> {/* Wrap in ProductProvider to ensure context is available */}
-        <PurchasePage />
+      <ProductProvider>  {/* Provide context for PurchasePage */}
+        <CartProvider>   {/* Provide context for the cart */}
+          <PurchasePage />
+        </CartProvider>
       </ProductProvider>
     ),
   },
   {
-    path: '/confirmation/:id',
-    element: <ConfirmationPage />,
+    path: '/confirmation',
+    element: (
+      <ProductProvider>  {/* Provide context for PurchasePage */}
+        <CartProvider>   {/* Provide context for the cart */}
+          <ConfirmationPage />
+        </CartProvider>
+      </ProductProvider>
+    ),
   },
   {
     path: '/products',
     element: (
-      <ProductProvider> {/* Wrap in ProductProvider for consistent context */}
-        <ProductList />
+      <ProductProvider>  {/* Provide context for ProductList */}
+        <CartProvider>   {/* Provide context for the cart */}
+          <ProductList />
+        </CartProvider>
       </ProductProvider>
     ),
   },
   {
     path: '/about',
-    element: <About />,
+    element: (
+      <ProductProvider>  {/* Provide context for ProductList */}
+        <CartProvider>   {/* Provide context for the cart */}
+          <About />
+        </CartProvider>
+      </ProductProvider>
+    ),
   },
- 
 ]);
 
 export default router;

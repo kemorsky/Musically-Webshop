@@ -53,31 +53,30 @@ function App() {
     <>
      <main className='max-w-[100rem] m-auto bg-white'>
         <Header/>
-        <div className='flex flex-col w-full items-center justify-center'>
-            <div className='flex flex-col items-start justify-center bg-red-200 h-[20rem] lg:h-[40rem] w-[24rem] lg:w-[80rem] rounded-xl shadow-md overflow-hidden mt-4 relative'>
-              <img src={frontImage}
-              alt="person playing a guitar"
-              className='absolute top-0 left-0 w-full h-full object-cover opacity-90'
-                />
-                <section className='lg:w-[30rem] w-[24rem] lg:p-4 px-2 relative mt-4 lg:mt-0'>
-              <h1 className='text-left text-lg lg:text-4xl p-1'>No funds? No problem!</h1>
-              <p className='text-left text-[12px] lg:text-xl lg:w-[40rem] w-[20rem] px-1'>On Musically you can find your desired instrument for a fraction of its price.</p>
-              <p className='text-left text-[12px] lg:text-xl lg:w-[40rem] w-[20rem] px-1'>Browse amongst dozens of used instruments, or sell your own.</p>
-            </section>
-            <div className='lg:w-[30rem] w-[24rem] lg:p-4 px-2 flex flex-col relative'>
-                <h2 className='lg:text-4xl text-lg text-left p-1'>Maintain your passion.</h2>
-                <p className='lg:text-xl text-[12px] text-left p-1'>Who says hobbies have to be expensive?</p>
-                <button 
-                className="bg-transparent self-start hover:bg-transparent w-[6rem] text-sm lg:mt-2 text-white font-semibold hover:text-blue-500 mx-1 py-2 lg:px-4 border-2 border-white hover:border-blue-500 rounded"
-                onClick={goToProducts}>
-                    Get started!
-                </button>
-            </div>
-
-        </div>
-          <div className='max-w-[100rem] p-2'>
-            <h2 className='text-left text-xl lg:text-3xl text-black p-2'>Our latest additions:</h2>
-            <Carousel className='w-[22rem] lg:w-full rounded-lg shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)]' responsive={responsive}>
+        <div className='grid grid-cols-1 lg:grid-cols-10 grid-rows-10 lg:grid-rows-12 max-w-full mx-auto w-full h-[120rem] lg:place-items-center'>
+          <div className='lg:col-start-2 lg:col-end-10 lg:row-start-2 col-start-1 col-span-1 max-lg:col-span-1 row-start-1 row-end-2 lg:row-end-4 bg-red-200 h-[15rem] lg:h-[35rem] rounded-xl shadow-md overflow-hidden mt-4'>
+            <img src={frontImage}
+            alt="person playing a guitar"
+            className='opacity-90 lg:w-full w-[40%] object-cover'
+              />
+          </div>
+          <section className='lg:w-[30rem] w-[24rem] lg:col-start-2 col-start-1 lg:col-end-5 lg:row-start-2 lg:row-end-3 row-start-1 row-end-2 lg:p-4 px-2 relative mt-4 lg:mt-0'>
+            <h1 className='text-left text-lg lg:text-4xl p-1'>No funds? No problem!</h1>
+            <p className='text-left text-sm lg:text-xl px-1'>On Musically you can find your desired instrument for a fraction of its price.</p>
+            <p className='text-left text-sm lg:text-xl px-1'>Browse amongst dozens of used instruments, or sell your own.</p>
+          </section>
+          <div className='lg:w-[30rem] w-[24rem] lg:col-start-2 lg:col-end-5 col-start-1 lg:row-start-3 lg:row-end-4 row-start-2 row-end-3 lg:p-4 px-2 flex flex-col relative'>
+              <h2 className='lg:text-4xl text-lg text-left p-1'>Maintain your passion.</h2>
+              <p className='lg:text-xl text-sm text-left p-1'>Who says hobbies have to be expensive?</p>
+              <button 
+              className="bg-transparent self-start hover:bg-transparent w-[6rem] text-sm lg:mt-2 text-white font-semibold hover:text-blue-500 mx-1 py-2 lg:px-4 border-2 border-white hover:border-blue-500 rounded"
+              onClick={goToProducts}>
+                  Get started!
+              </button>
+          </div>
+          <div className='lg:col-start-1 lg:col-end-11 lg:row-start-6 row-start-3 lg:row-end-7 w-[100rem] p-2'>
+            <h2 className='col-start-5 col-end-7 text-left text-2xl lg:text-3xl text-black p-2'>Our latest additions:</h2>
+            <Carousel className='lg:col-start-1 lg:col-end-11 col-span-1 w-[22rem] lg:w-full rounded-lg shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)]' responsive={responsive}>
               {products.map((product)=> (
                 <div
                 key={product.id}
@@ -111,29 +110,39 @@ function App() {
               ))}
           </Carousel>
           </div>
-          <section className='lg:w-[75rem] w-[22rem] row-start-9 row-end-9 flex flex-col justify-between'>
+          <section className='col-start-2 col-end-10 lg:w-[75rem] w-[22rem] row-start-9 row-end-9 flex flex-col justify-between'>
             <div>
-              <h2 className='lg:text-3xl text-xl text-black place-items-center mb-4'>Our current selection</h2>
+              <h2 className='text-3xl text-black place-items-center mb-4'>Our current selection</h2>
             </div>
-            <div className='lg:flex lg:flex-row flex lg:justify-between justify-around flex-wrap'>
+            <div className='lg:flex col-start-1 lg:flex-row flex lg:justify-between justify-around flex-wrap'>
               <div className='m-2 lg:w-[15rem] w-[8rem] lg:h-[15rem] h-[8rem] relative bg-cover bg-center shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] hover:cursor-pointer hover:brightness-75 bg-none rounded-xl flex justify-center items-center hover:scale-105 transition-all duration-150 overflow-hidden'>
                 <img src={guitarsImage} className='lg:w-[15rem] w-[8rem] lg:h-[15rem] h-[8rem] object-cover' alt="" />
-                <h1 className='absolute text-[1.25rem] lg:text-4xl'>Guitars</h1>
+                <h1 className='absolute text-4xl'>Guitars</h1>
               </div>
               <div className='m-2  lg:w-[15rem] w-[8rem] lg:h-[15rem] h-[8rem] relative bg-cover bg-center shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] hover:cursor-pointer hover:brightness-75 bg-none rounded-xl flex justify-center items-center hover:scale-105 transition-all duration-150 overflow-hidden'>
                 <img src={drumsImage} className='lg:w-[15rem] w-[8rem] lg:h-[15rem] h-[8rem] object-cover' alt="" />
-                <h1 className='absolute text-[1.25rem] lg:text-4xl'>Drums</h1>
+                <h1 className='absolute text-4xl'>Drums</h1>
                </div>
               <div className='m-2 lg:w-[15rem] w-[8rem] lg:h-[15rem] h-[8rem] relative bg-cover bg-center shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] hover:cursor-pointer hover:brightness-75 bg-none rounded-xl flex justify-center items-center hover:scale-105 transition-all duration-150 overflow-hidden'>
                 <img src={keyboardImage} className='lg:w-[15rem] w-[8rem] lg:h-[15rem] h-[8rem] object-cover' alt="" />
-                <h1 className='absolute text-[1.25rem] lg:text-4xl'>Flutes</h1>
+                <h1 className='absolute text-4xl'>Flutes</h1>
                </div>
               <div className='m-2 lg:w-[15rem] w-[8rem] lg:h-[15rem] h-[8rem] relative bg-cover bg-center shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] hover:cursor-pointer hover:brightness-75 bg-none rounded-xl flex justify-center items-center hover:scale-105 transition-all duration-150 overflow-hidden'>
                 <img src={accessoriesImage} className='lg:w-[15rem] w-[8rem] lg:h-[15rem] h-[8rem] object-cover' alt="" />
-                <h1 className='absolute text-[1.25rem] lg:text-4xl'>Saxophones</h1>
+                <h1 className='absolute text-4xl'>Saxophones</h1>
               </div>
             </div>
           </section>
+          <section className='col-start-2 col-end-5 row-start-10 row-end-12'>
+              <span>
+                <h1>Not here to buy?</h1>
+                <button>Sell your gear!</button>
+              </span>
+            </section>
+            <section className='col-start-7 col-end-10 row-start-11 row-end-13'>
+                <h1>Still not sure?</h1>
+                <EmailForm/>
+              </section>
         </div>
       <Footer/>
      </main>
