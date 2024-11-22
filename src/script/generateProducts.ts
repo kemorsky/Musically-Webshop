@@ -15,24 +15,24 @@ import fluteImage3 from '../assets/flute3.jpg';
 import saxophoneImage1 from '../assets/saxophone1.png';
 import saxophoneImage2 from '../assets/saxophone2.jpg';
 
-const categories: ProductCategory[] = ['Acoustic Guitar', 'Electric Guitar', 'Drums', 'Flutes', 'Saxophones'];
+const categories: ProductCategory[] = ['Acoustic', 'Electric', 'Drums', 'Flutes', 'Saxophones'];
 const conditions: ProductCondition[] = ['New', 'Like New', 'Good', 'Fair', 'Stage Tested'];
 const brands = {
-  'Acoustic Guitar': ['Martin', 'Taylor', 'Yamaha', 'Gibson', 'Fender'],
-  'Electric Guitar': ['Fender', 'Gibson', 'Ibanez', 'Epiphone'],
+  'Acoustic': ['Martin', 'Taylor', 'Yamaha', 'Gibson', 'Fender'],
+  'Electric': ['Fender', 'Gibson', 'Ibanez', 'Epiphone'],
   'Drums': ['Pearl', 'Yamaha', 'Ludwig'],
-  'Flutes': ['Yamaha', 'Gemeinhardt', 'Muramatsu', 'Trevor James', 'Powell Flutes'],
-  'Saxophones': ['Selmer Paris', 'Yanagisawa', 'Yamaha', 'Jupiter', 'P. Mauriat']
+  'Flutes': ['Yamaha', 'Muramatsu'],
+  'Saxophones': ['Yamaha', 'Jupiter', 'P. Mauriat']
 };
 
 // Predefined instrument images based on categories
 const instrumentImages: { [key in ProductCategory]: string[] } = {
-  'Acoustic Guitar': [
+  'Acoustic': [
     acousticGuitarImage1,
     acousticGuitarImage2,
     acousticGuitarImage3
   ],
-  'Electric Guitar': [  
+  'Electric': [  
     electricGuitarImage1,
     electricGuitarImage2,
     electricGuitarImage3

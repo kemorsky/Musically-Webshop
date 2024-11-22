@@ -1,6 +1,6 @@
 export type ProductCategory =  
-| 'Acoustic Guitar'
-| 'Electric Guitar'
+| 'Acoustic'
+| 'Electric'
 | 'Drums'
 | 'Flutes'
 | 'Saxophones';

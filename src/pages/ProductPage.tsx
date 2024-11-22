@@ -31,28 +31,27 @@ export default function ProductPage() {
       <div className="font-sans bg-white">
             <div className="p-4 lg:max-w-7xl max-w-4xl mx-auto">
                 <div className="grid items-start grid-cols-1 lg:grid-cols-5 gap-6 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] p-6 rounded-lg">
-                    <div className="lg:col-span-3 w-full lg:sticky top-0 text-center">
+                    <div className="lg:col-span-3 lg:w-full w-2/3 lg:sticky top-0 m-auto">
                         <div className="px-4 py-10 rounded-lg shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] relative">
-                            <img src={product.images[0]} alt="Product" className="lg:w-1/2 w-2/3 rounded object-cover mx-auto" />
+                            <img src={product.images[0]} alt="Product" className="lg:w-1/2 w-full rounded object-cover mx-auto" />
                         </div>
                     </div>
                     <div className="lg:col-span-2">
-                        <h2 className="text-lg lg:text-2xl font-semibold text-black text-left">{product.name}</h2>
-                        <p className="text-md lg:text-2xl text-black py-2 text-left">{product.description}</p>
+                        <h2 className="text-lg lg:text-2xl font-semibold text-black text-left font-main">{product.name}</h2>
+                        <p className="text-md lg:text-xl text-black py-2 text-left font-secondary">{product.description}</p>
                         <div className="mt-2 text-black">
-                            <article className="py-2 max-w-[50rem] bg-white border rounded-lg shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] p-4 text-left">Seller's description: 
-                            <p className="text-sm lg:text-md text-black ">{product.sellerDescription}</p>
+                            <article className="py-2 max-w-[50rem] bg-blue-100 border rounded-lg shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] p-4 text-sm lg:text-lg text-left">Seller's description: 
+                                <p className="text-[0.8rem] lg:text-md text-black ">{product.sellerDescription}</p>
                             </article>
                         </div>
-                        <div className="flex flex-wrap gap-4 mt-8">
+                        <div className="flex flex-wrap gap-4 mt-6">
                           <p className="text-xl font-bold text-gray-800">
                             {formatPrice(product.price)}
                           </p>
                         </div>
-                        <div className="flex flex-wrap gap-4 mt-8">
-                            <button type="button" className="min-w-[200px] px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded">Buy now</button>
+                        <div className="flex flex-wrap gap-4 mt-6">
                             <button type="button" 
-                                className="min-w-[200px] px-4 py-2.5 border border-blue-600 bg-transparent hover:bg-gray-50 text-gray-800 text-sm font-semibold rounded"
+                                className={`min-w-[150px] px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-buttons rounded-lg transition duration-200 ${isInCart(product.id) ? 'bg-red-700 hover:bg-red-800' : ''}`}
                                 onClick={() => {
                                     if (isInCart(product.id)) {
                                       removeFromCart(product.id);
@@ -63,21 +62,22 @@ export default function ProductPage() {
                                 >
                                   {isInCart(product.id) ? "Remove from cart" : "Add to cart"}
                             </button>
+                            <button type="button" className="min-w-[150px] px-4 py-2.5 bg-green-700 hover:bg-green-800 text-white text-sm font-buttons rounded-lg">Buy now</button>
                         </div>
                     </div>
                 </div>
                 <div className="mt-8 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] p-6">
-                    <h3 className="text-xl font-bold text-gray-800">Product information</h3>
+                    <h3 className="text-xl font-bold font-main text-gray-800">Product information</h3>
                     <ul className="mt-4 space-y-6 text-gray-800">
-                        <li className="text-sm flex justify-between">CATEGORY <span className="ml-4">{product.category}</span></li>
-                        <li className="text-sm flex justify-between">BRAND <span className="ml-4">{product.brand}</span></li>
-                        <li className="text-sm flex justify-between">YEAR OF PRODUCTION <span className="ml-4">{product.yearMade}</span></li>
-                        <li className="text-sm flex justify-between">CONDITION <span className="ml-4">{product.condition}</span></li>
-                        <li className="text-sm flex justify-between">WIDTH <span className="ml-4">{product.width} mm</span></li>
+                        <li className="text-sm flex justify-between">Category <span className="ml-4">{product.category}</span></li>
+                        <li className="text-sm flex justify-between">Brand <span className="ml-4">{product.brand}</span></li>
+                        <li className="text-sm flex justify-between">Year of production <span className="ml-4">{product.yearMade}</span></li>
+                        <li className="text-sm flex justify-between">Condition <span className="ml-4">{product.condition}</span></li>
+                        <li className="text-sm flex justify-between">Width <span className="ml-4">{product.width} mm</span></li>
                     </ul>
                 </div>
                 <div className="mt-8 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] p-6">
-                    <h3 className="text-xl font-bold text-gray-800">Seller Reviews(6)</h3>
+                    <h3 className="text-xl font-bold font-main text-gray-800">Seller Reviews (6)</h3>
                     <div className="grid md:grid-cols-2 gap-12 mt-4">
                         <div className="space-y-3">
                             <div className="flex items-center">
@@ -164,7 +164,6 @@ export default function ProductPage() {
                                     <p className="text-sm mt-4 text-black text-start">{product.sellerReviews[0]?.comment}</p>
                                 </div>
                             </div>
-
                             <button type="button" className="w-full mt-10 px-4 py-2.5 bg-transparent hover:bg-gray-50 border border-blue-600 text-gray-800 font-bold rounded">Read all reviews</button>
                         </div>
                     </div>

@@ -13,9 +13,7 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const { products } = useProducts();
-
   const navigate = useNavigate();
-
   const { cartItems, removeFromCart } = useCart();  // Access cart state
 
   const fuse = new Fuse(matches, {
@@ -55,23 +53,16 @@ export default function Header() {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-8">
               <div className="shrink-0">
-                <a href="#" title="">
-                  <img
-                    className="block w-auto h-8 dark:hidden"
-                    src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/logo-full.svg"
-                    alt="Logo"
-                  />
-                  <img
-                    className="hidden w-auto h-8 dark:block"
-                    src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/logo-full-dark.svg"
-                    alt="Dark Logo"
-                  />
-                </a>
+                <section className="flex items-center justify-center text-white lg:mb-1 lg:text-xl text-[1rem] font-semibold white cursor-pointer"
+                        onClick={goToHome}>
+                  <img src="https://www.svgrepo.com/show/499962/music.svg" className="lg:h-12 mr-3 h-9 " alt="Musically Logo"/>
+                  Musically
+                </section>
               </div>
               <ul className="hidden lg:flex items-center justify-start gap-6 md:gap-8 py-3 sm:justify-center">
                   <li className="shrink-0">
                     <a
-                      className="flex text-sm font-medium text-gray-900 hover:text-primary-700 dark:text-white dark:hover:text-primary-500 cursor-pointer"
+                      className="flex text-sm font-medium text-white hover:text-primary-700 cursor-pointer"
                       onClick={goToHome}
                     >
                       Home
@@ -79,7 +70,7 @@ export default function Header() {
                   </li>
                   <li className="shrink-0">
                     <p                      
-                      className="flex text-sm font-medium text-gray-900 hover:text-primary-700 dark:text-white dark:hover:text-primary-500 cursor-pointer"
+                      className="flex text-sm font-medium text-white hover:text-primary-700 cursor-pointer"
                       onClick={goToProducts}
                     >
                       Products
@@ -87,7 +78,7 @@ export default function Header() {
                   </li>
                   <li className="shrink-0">
                     <p
-                      className="flex text-sm font-medium text-gray-900 hover:text-primary-700 dark:text-white dark:hover:text-primary-500 cursor-pointer"
+                      className="flex text-sm font-medium text-white hover:text-primary-700 cursor-pointer"
                       onClick={goToAbout}
                     >
                       About
@@ -95,7 +86,7 @@ export default function Header() {
                   </li>
                   <li className="shrink-0">
                     <p
-                      className="flex text-sm font-medium text-gray-900 hover:text-primary-700 dark:text-white dark:hover:text-primary-500 cursor-pointer"
+                      className="flex text-sm font-medium text-white hover:text-primary-700 cursor-pointer"
                       onClick={goToContact}
                     >
                       Contact
@@ -112,13 +103,13 @@ export default function Header() {
                   value={query}
                   onChange={(e) => handleSearch(e.target.value)}
                   placeholder="Search..."
-                  className="border border-gray-300 rounded-full px-4 py-2 text-white outline-none focus:ring-2 focus:ring-green-500 transition-all w-full lg:w-80"
+                  className="border border-gray-300 rounded-full px-4 py-2 text-white bg-gray-700 outline-none focus:ring-2 focus:ring-gray-500 transition-all w-full lg:w-80"
                 />
               </div>
 
               <button
                 onClick={() => setCartDropdownOpen(!cartDropdownOpen)}
-                className="inline-flex items-center rounded-lg justify-center p-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm font-medium leading-none text-gray-900 dark:text-white"
+                className="inline-flex items-center rounded-lg justify-center p-2 bg-gray-800 hover:bg-gray-700 text-sm font-medium leading-none text-white"
               >
                 <span className="sr-only">Cart</span>
                 <svg
@@ -136,53 +127,37 @@ export default function Header() {
                     d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312"
                   />
                 </svg>
-                <span className="hidden sm:flex">My Cart</span>
+                <p className="lg:hidden ml-1 text-yellow-400">{cartItems.length}</p>
+                <span className="hidden sm:flex">My Cart <p className="ml-1 text-yellow-400">{cartItems.length}</p></span>
               </button>
               {cartDropdownOpen && (
-                <div className="absolute right-0 lg:right-[20rem] top-[3.3rem] lg:top-[3.8rem] z-10 w-80 lg:w-[30rem] space-y-4 overflow-hidden rounded-lg bg-white p-4 antialiased shadow-lg dark:bg-gray-800">
+                <div className="absolute right-0 lg:right-[20rem] top-[3.3rem] lg:top-[3.8rem] z-10 lg:w-[30rem] w-[24rem] lg:min-h-[3rem] min-h-[4rem] space-y-4 overflow-hidden rounded-lg p-4 antialiased shadow-lg bg-gray-700 transition ease-in-out duration-200">
                   {/* Purchased items go here */}
-                  <div className="flex flex-col gap-2">
+                  <div className="flex flex-col gap-2 text-white">
                     {cartItems.length === 0 ? (
                       <p>Your cart is empty</p>
                     ) : (
                     cartItems.map((product) => (
-                    <div id={product.id} className='flex justify-around items-center p-2 mb-1 m-auto rounded-lg shadow-md text-black text-opacity-75 bg-white lg:w-[26rem] w-[18rem] min-h-[5rem] text-left'>
-                        <img className="lg:w-[6rem] w-[5rem] lg:h-[6rem] h-[5rem] bg-orange-400 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] rounded-lg" src={product.images[0]} alt="" />
-                          <article className="lg:w-[16rem] w-[8rem]">
-                            <h2 className="lg:text-lg text-sm font-semibold ">{product.name}</h2>
-                            <p className="text-xs sm:text-sm text-black"><strong>Brand:</strong> {product.brand}</p>
-                            <p className="text-xs sm:text-sm text-black"><strong>Condition:</strong> {product.condition}</p>
-                            <section className="flex items-center justify-between">
-                              <p className="lg:text-lg text-[1rem] font-bold text-gray-800">
-                                  {formatPrice(product.price)}
-                                </p>
-                                <button className="h-[2.5rem] w-[2.5rem] bg-white border border-gray-700 border-opacity-60 rounded-md shadow-md flex justify-center items-center"
-                                        onClick={() => removeFromCart(product.id)}>
-                                  <svg xmlns="http://www.w3.org/2000/svg" 
-                                      width="24" 
-                                      height="24" 
-                                      viewBox="0 0 24 24" 
-                                      fill="none" 
-                                      stroke="#FF0000" 
-                                      stroke-width="2" 
-                                      stroke-linecap="round" 
-                                      stroke-linejoin="round" 
-                                        className="lucide lucide-trash-2">
-                                          <path d="M3 6h18"/>
-                                          <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
-                                          <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
-                                          <line x1="10" x2="10" y1="11" y2="17"/>
-                                          <line x1="14" x2="14" y1="11" y2="17"/>
-                                </svg>
+                    <div id={product.id} className='flex justify-around items-center p-2 mb-1 m-auto rounded-lg shadow-md text-black text-opacity-75 bg-white lg:w-[26rem] w-[22rem] min-h-[5rem] text-left'>
+                        <img className="lg:w-[6rem] w-[5rem] lg:h-[6rem] h-[5rem] bg-white shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] rounded-lg" src={product.images[0]} alt="" />
+                        <article className="lg:w-[16rem] w-[12rem]">
+                          <h2 className="lg:text-lg text-sm font-semibold font-main">{product.name}</h2>
+                          <section className="flex items-center justify-between">
+                            <p className="lg:text-lg text-[1rem] font-bold font-secondary text-gray-800">
+                                {formatPrice(product.price)}
+                              </p>
+                              <button className="lg:w-[5rem] w-[3.5rem] lg:h-[2rem] h-[2rem] font-buttons flex justify-center items-center rounded-md lg:text-[0.8rem] text-[0.7rem] text-white bg-red-700 hover:bg-red-800"
+                                     onClick={() => removeFromCart(product.id)}>
+                                Remove
                               </button>
                           </section>
-                      </article>
-                  </div>
+                        </article>
+                    </div>
                   ))
                 )}
                 </div>
                   <button
-                    className="inline-flex w-full lg:w-[14rem] justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 dark:bg-primary-600 dark:hover:bg-primary-700"
+                    className={`inline-flex w-full lg:w-[14rem] justify-center rounded-lg px-5 py-2.5 text-sm font-buttons text-white bg-indigo-600 hover:bg-indigo-700 transition ${cartItems.length === 0 ? 'hidden' : ''}`}
                     onClick={() => goToCheckout(products[0])}
                   >
                     Proceed to Checkout
@@ -192,18 +167,18 @@ export default function Header() {
 
               <button
                 onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                className="inline-flex items-center rounded-lg justify-center p-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm font-medium leading-none text-gray-900 dark:text-white"
+                className="inline-flex items-center rounded-lg justify-center p-2 hover:bg-gray-700 bg-gray-800 text-sm font-medium leading-none text-white"
               >
                 Account
               </button>
               {userDropdownOpen && (
-                <div className="absolute right-0 lg:right-[14rem] top-[3.2rem]  lg:top-[3.8rem] z-10 w-56 divide-y divide-gray-100 rounded-lg shadow dark:divide-gray-600 dark:bg-gray-700">
+                <div className="absolute right-0 lg:right-[14rem] top-[3.2rem]  lg:top-[3.8rem] z-10 w-56 divide-y rounded-lg shadow divide-gray-600 bg-gray-700 transition duration-200">
                   <ul className="p-2 text-sm text-white">
                     {['My Account', 'My Orders', 'Settings'].map(
                       (item) => (
                         <li key={item}>
                           <p
-                            className="block px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-600"
+                            className="block px-3 py-2 hover:bg-gray-600"
                           >
                             {item}
                           </p>
@@ -214,7 +189,7 @@ export default function Header() {
                   <div className="p-2">
                     <a
                       href="#"
-                      className="block px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-600"
+                      className="block px-3 py-2 hover:bg-gray-600"
                     >
                       Sign Out
                     </a>
@@ -224,7 +199,7 @@ export default function Header() {
 
               <button
                 onClick={() => setMenuOpen(!menuOpen)}
-                className="inline-flex lg:hidden items-center justify-center p-2 hover:bg-gray-100 rounded-md dark:hover:bg-gray-700"
+                className="inline-flex lg:hidden items-center justify-center p-2 rounded-md bg-gray-800 hover:bg-gray-700"
               >
                 <svg
                   className="w-5 h-5"
@@ -233,7 +208,7 @@ export default function Header() {
                   fill="none"
                 >
                   <path
-                    stroke="currentColor"
+                    stroke="#ffffff"
                     strokeLinecap="round"
                     strokeWidth="2"
                     d="M5 7h14M5 12h14M5 17h14"
@@ -243,12 +218,12 @@ export default function Header() {
             </div>
           </div>
           {menuOpen && (
-            <div className="lg:hidden">
-              <ul className="space-y-3 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+            <div className="lg:hidden transition duration-200">
+              <ul className="space-y-3 p-4 bg-gray-700 rounded-lg">
                   <li>
                     <a
                       href="#"
-                      className="block hover:text-primary-700 dark:hover:text-primary-500"
+                      className="block text-white"
                       onClick={goToHome}
                     >
                       Home
@@ -257,7 +232,7 @@ export default function Header() {
                   <li>
                     <a
                       href="#"
-                      className="block hover:text-primary-700 dark:hover:text-primary-500"
+                      className="block text-white"
                       onClick={goToProducts}
                     >
                       Products
@@ -266,7 +241,7 @@ export default function Header() {
                   <li>
                     <a
                       href="#"
-                      className="block hover:text-primary-700 dark:hover:text-primary-500"
+                      className="block text-white"
                       onClick={goToAbout}
                     >
                       About
@@ -275,7 +250,7 @@ export default function Header() {
                   <li>
                     <a
                       href="#"
-                      className="block hover:text-primary-700 dark:hover:text-primary-500"
+                      className="block text-white"
                       onClick={goToContact}
                     >
                       Contact
