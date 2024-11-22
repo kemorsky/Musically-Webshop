@@ -108,19 +108,19 @@ function App() {
             <div className='lg:flex lg:flex-row flex lg:justify-between justify-around flex-wrap'>
               <div className='m-2 lg:w-[15rem] w-[8rem] lg:h-[15rem] h-[8rem] relative bg-cover bg-center shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] hover:cursor-pointer hover:brightness-75 bg-none rounded-xl flex justify-center items-center hover:scale-105 transition-all duration-150 overflow-hidden'>
                 <img src={guitarsImage} className='lg:w-[15rem] w-[8rem] lg:h-[15rem] h-[8rem] object-cover' alt="" />
-                <h1 className='absolute text-[1.25rem] lg:text-4xl'>Guitars</h1>
+                <h1 className='absolute text-[1.25rem] lg:text-4xl font-main'>Guitars</h1>
               </div>
               <div className='m-2  lg:w-[15rem] w-[8rem] lg:h-[15rem] h-[8rem] relative bg-cover bg-center shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] hover:cursor-pointer hover:brightness-75 bg-none rounded-xl flex justify-center items-center hover:scale-105 transition-all duration-150 overflow-hidden'>
                 <img src={drumsImage} className='lg:w-[15rem] w-[8rem] lg:h-[15rem] h-[8rem] object-cover' alt="" />
-                <h1 className='absolute text-[1.25rem] lg:text-4xl'>Drums</h1>
+                <h1 className='absolute text-[1.25rem] lg:text-4xl font-main'>Drums</h1>
                </div>
               <div className='m-2 lg:w-[15rem] w-[8rem] lg:h-[15rem] h-[8rem] relative bg-cover bg-center shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] hover:cursor-pointer hover:brightness-75 bg-none rounded-xl flex justify-center items-center hover:scale-105 transition-all duration-150 overflow-hidden'>
                 <img src={keyboardImage} className='lg:w-[15rem] w-[8rem] lg:h-[15rem] h-[8rem] object-cover' alt="" />
-                <h1 className='absolute text-[1.25rem] lg:text-4xl'>Flutes</h1>
+                <h1 className='absolute text-[1.25rem] lg:text-4xl font-main'>Flutes</h1>
                </div>
               <div className='m-2 lg:w-[15rem] w-[8rem] lg:h-[15rem] h-[8rem] relative bg-cover bg-center shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] hover:cursor-pointer hover:brightness-75 bg-none rounded-xl flex justify-center items-center hover:scale-105 transition-all duration-150 overflow-hidden'>
                 <img src={accessoriesImage} className='lg:w-[15rem] w-[8rem] lg:h-[15rem] h-[8rem] object-cover' alt="" />
-                <h1 className='absolute text-[1.25rem] lg:text-4xl'>Saxophones</h1>
+                <h1 className='absolute text-[1.25rem] lg:text-4xl font-main'>Saxophones</h1>
               </div>
             </div>
           </section>

@@ -222,7 +222,11 @@ export default function PurchasePage() {
                         <hr className="h-[1px] bg-transparent border-top-solid border-gray-500 w-[19.5rem] lg:w-[25rem] mb-[14px]" />
                         <p className="text-md self-start ">Enter discount code (DISCOUNT10)</p>
                         <input value={discountCode} onChange={handleDiscountCode} type="text" className="p-1 w-[19.8rem] lg:w-[25rem] rounded-md border border-gray-600 shadow-sm bg-white text-black mt-2 mb-2" />
-                        <button onClick={handleApplyDiscount} className="btn-primary mt-6 w-full py-2 px-4 rounded-lg shadow font-buttons transition bg-green-500 hover:bg-green-600 text-white">
+                        <button
+                            onClick={handleApplyDiscount}
+                            disabled={discountCode !== "DISCOUNT10"}
+                            className={`btn-primary mt-6 w-full py-2 px-4 rounded-lg shadow font-buttons transition text-white ${discountCode === "DISCOUNT10" ? 'bg-green-500 hover:bg-green-600 text-white' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
+                            >
                             Apply Discount
                         </button>
                     </section>

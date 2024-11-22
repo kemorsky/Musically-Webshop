@@ -68,7 +68,7 @@ export default function ConfirmationPage() {
                         <hr className="h-[1px] bg-gray-500 w-full mt-2" />
                         <section className='flex lg:w-[17rem] w-[14rem] lg:justify-between justify-between items-center self-start mt-2 font-buttons'>
                             <button className='bg-green-500 hover:bg-green-600 lg:w-[8rem] w-[7rem] lg:h-[3rem] h-[2.5rem] rounded-lg lg:text-base text-xs text-white transition' onClick={handleReturn}>Return to Home</button>
-                            <button className='bg-red-400 hover:bg-red-500 lg:w-[8rem] w-[6rem] lg:h-[3rem] h-[2.5rem] rounded-lg lg:text-base text-xs text-white transition' onClick={handleReturn}>Track order</button>
+                            <button className='bg-red-400 hover:bg-red-500 lg:w-[8rem] w-[6rem] lg:h-[3rem] h-[2.5rem] rounded-lg lg:text-base text-xs text-white transition'>Track order</button>
                         </section>
                     </section>
                     <section className='flex flex-col justify-start items-center lg:w-[30rem] lg:min-h-[325px] w-[22rem] bg-purple-200 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] rounded-xl text-black p-4'>
